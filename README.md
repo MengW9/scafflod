@@ -13,6 +13,8 @@
 #### 20190926
 
 ### 集成了MySql、MyBatis、MyBatis逆向工程
+### 新增Lombok依赖  Restful风格
 
 ------
+
 
