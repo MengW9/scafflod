@@ -1,7 +1,11 @@
 package com.meng.scaffold;
 
+import com.meng.scaffold.dao.User;
+import com.meng.scaffold.service.DataSourceTestService;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -12,7 +16,7 @@ import java.sql.SQLException;
 
 /**
  * @description: 测试数据源连接是否成功
- * @author: WangMengWei
+ * @author: MengW9
  * @create: 2019-09-11 18:49
  **/
 @RunWith(SpringRunner.class)
@@ -24,6 +28,24 @@ public class TestDB {
      */
     @Resource
     DataSource dataSource;
+
+    @Autowired
+    private DataSourceTestService dataSourceTestService;
+
+    @Test
+    public void test(){
+        // 数据源ONE
+        User user1 = dataSourceTestService.test1(1L);
+        System.out.println(ToStringBuilder.reflectionToString(user1));
+
+        // 数据源TWO
+        User user2 = dataSourceTestService.test2(1L);
+        System.out.println(ToStringBuilder.reflectionToString(user2));
+
+        // 数据源ONE
+        User user3 = dataSourceTestService.test1(1L);
+        System.out.println(ToStringBuilder.reflectionToString(user3));
+    }
 
     @Test
     public void contextLoads() throws SQLException {

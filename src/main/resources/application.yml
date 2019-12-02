@@ -1,38 +1,54 @@
 server:
-  port: 8081
+    port: 8081
 
 spring:
-  datasource:
-    name: datasource
-    type: com.alibaba.druid.pool.DruidDataSource
-    #druid相关配置
-    druid:
-      #监控统计拦截的filters
-      filters: stat
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      #基本属性
-      url: @jdbc.url@
-      username: @jdbc.username@
-      password: @jdbc.password@
-      #配置初始化大小/最小/最大
-      initial-size: 1
-      min-idle: 1
-      max-active: 20
-      #获取连接等待超时时间
-      max-wait: 60000
-      #间隔多久进行一次检测，检测需要关闭的空闲连接
-      time-between-eviction-runs-millis: 60000
-      #一个连接在池中最小生存的时间
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 'x'
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
-      pool-prepared-statements: false
-      max-pool-prepared-statement-per-connection-size: 20
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        #druid相关配置
+        druid:
+            one:
+                name: ds_mysql
+                driver-class-name: com.mysql.cj.jdbc.Driver
+                #基本属性
+                url: @jdbc.url@
+                username: @jdbc.username@
+                password: @jdbc.password@
+                test-while-idle: false
+            two:
+                name: ds_sqlite
+                driver-class-name: org.sqlite.JDBC
+                #基本属性
+                url: jdbc:sqlite:db/test.db
+                username: test
+                password: test
+                test-while-idle: false
+            use-global-data-source-stat: true
+            #监控统计拦截的filters
+            filters: stat
+            #配置初始化大小/最小/最大
+            initial-size: 2
+            min-idle: 2
+            max-active: 20
+            #获取连接等待超时时间
+            max-wait: 60000
+            #间隔多久进行一次检测，检测需要关闭的空闲连接
+            time-between-eviction-runs-millis: 60000
+            #一个连接在池中最小生存的时间
+            min-evictable-idle-time-millis: 300000
+            validation-query: SELECT 'x' FROM DUAL
+            # mysql需要设置校验
+            # 指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个.注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+            test-while-idle: false
+            # 指明是否在归还到池中前进行检验  注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+            test-on-borrow: false
+            # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除. 注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+            test-on-return: false
+            #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+            pool-prepared-statements: false
+#            max-pool-prepared-statement-per-connection-size: 20
+
 
 servlet:
-  multipart:
-    max-file-size: 30Mb
-    max-request-size: 30Mb
+    multipart:
+        max-file-size: 30Mb
+        max-request-size: 30Mb

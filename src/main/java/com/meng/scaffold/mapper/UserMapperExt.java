@@ -1,7 +1,7 @@
 package com.meng.scaffold.mapper;
 
-import javax.annotation.Resource;
+import org.springframework.stereotype.Repository;
 
-@Resource
+@Repository
 public interface UserMapperExt extends UserMapper {
 }

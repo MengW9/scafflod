@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @description: mybatis逆向工程    自动生成mybatis-Mapper工具
- * @author: WangMengWei
+ * @author: MengW9
  * @create: 2019-09-11 08:58
  **/
 public class Generator {
